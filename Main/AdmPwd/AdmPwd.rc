@@ -47,8 +47,8 @@ LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,1,0,0
- PRODUCTVERSION 5,1,0,0
+ FILEVERSION 5,2,0,0
+ PRODUCTVERSION 5,2,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -65,12 +65,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Microsoft"
             VALUE "FileDescription", "AdmPwd GPO Extension: manage local admin account password"
-            VALUE "FileVersion", "5.1.0.0"
+            VALUE "FileVersion", "5.2.0.0"
             VALUE "InternalName", "AdmPwd"
-            VALUE "LegalCopyright", "Copyright (C) 2010 - 2015 Jiri Formacek, Microsoft | Services"
+            VALUE "LegalCopyright", "Copyright (C) 2010 - 2015 Jiri Formacek"
             VALUE "OriginalFilename", "AdmPwd.dll"
             VALUE "ProductName", "AdmPwd GPO CSE"
-            VALUE "ProductVersion", "5.1.0.0"
+            VALUE "ProductVersion", "5.2.0.0"
         END
     END
     BLOCK "VarFileInfo"
