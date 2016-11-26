@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using AdmPwd.Utils;
 using AdmPwd.PSTypes;
+using AdmPwd.UI.Properties;
 
 namespace AdmPwd.UI
 {
@@ -22,9 +17,11 @@ namespace AdmPwd.UI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtComputerName.Text.Trim()))
+            try
             {
-                lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("MustSpecifyComputerName");
+                if (string.IsNullOrEmpty(txtComputerName.Text.Trim()))
+            {
+                lblStatus.Text = Resources.MustSpecifyComputerName;
                 return;
             }
             lblStatus.Text = string.Empty;
@@ -38,11 +35,11 @@ namespace AdmPwd.UI
             {
                 var DNs=DirectoryUtils.GetComputerDN(txtComputerName.Text);
                 if(DNs.Count==0) {
-                    lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("ComputerNotFound"); 
+                    lblStatus.Text = Resources.ComputerNotFound; 
                     return;
                 }
                 if(DNs.Count>1) {
-                    lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("ComputerNameAmbiguous");
+                    lblStatus.Text = Resources.ComputerNameAmbiguous;
                     return;
                 }
                 compDN = DNs[0];
@@ -50,12 +47,19 @@ namespace AdmPwd.UI
             PasswordInfo pi = DirectoryUtils.GetPasswordInfo(compDN);
             if (pi == null)
             {
-                lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("ComputerNotFound");
+                lblStatus.Text = Resources.ComputerNotFound;
                 return;
             }
             this.txtPassword.Text = pi.Password;
             this.txtCurrentPwdExpiration.Text = pi.ExpirationTimestamp.ToString();
             this.computerDN = pi.DistinguishedName;
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = ex.Message;
+                txtPassword.Text = string.Empty;
+                txtCurrentPwdExpiration.Text = string.Empty;
+            }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -68,7 +72,7 @@ namespace AdmPwd.UI
             lblStatus.Text = string.Empty;
             if (this.computerDN == null)
             {
-                lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("NoComputerSelected");
+                lblStatus.Text = Resources.NoComputerSelected;
                     return;
             }
             DateTime newPwdExpiration = DateTime.Now;
@@ -80,7 +84,7 @@ namespace AdmPwd.UI
                 }
                 catch (FormatException)
                 {
-                    lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("InvalidDateFormat");
+                    lblStatus.Text = Resources.InvalidDateFormat;
                     return;
                 }
             }
@@ -90,7 +94,7 @@ namespace AdmPwd.UI
                 PasswordInfo pi = DirectoryUtils.GetPasswordInfo(computerDN);
                 if (pi == null)
                 {
-                    lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("ComputerNotFound");
+                    lblStatus.Text = Resources.ComputerNotFound;
                     return;
                 }
                 this.txtPassword.Text = pi.Password;
@@ -98,10 +102,10 @@ namespace AdmPwd.UI
                 this.computerDN = pi.DistinguishedName;
             }
             catch(Exception) {
-                lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("PasswordResetFailed");
+                lblStatus.Text = Resources.PasswordResetFailed;
                 return;
             }
-            lblStatus.Text = (new System.Resources.ResourceManager("Strings", typeof(Form1).Assembly)).GetString("PasswordResetSucceeded");
+            lblStatus.Text = Resources.PasswordResetSucceeded;
         }
     }
 }

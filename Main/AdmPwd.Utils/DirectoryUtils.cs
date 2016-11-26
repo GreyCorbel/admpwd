@@ -13,17 +13,11 @@ namespace AdmPwd.Utils
     #region Classes
     public static class Constants
     {
-        static string ConfigFile="AdmPwd.Utils.config";
         public static string TimestampAttributeName
         {
             get
             {
-                string codeBase = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
-                string basePath = System.IO.Path.GetDirectoryName(codeBase);
-                string configPath = System.IO.Path.Combine(basePath, ConfigFile);
-
-                XElement root = XElement.Load(configPath);
-                return root.Descendants("add").Where(x => x.Attribute("key").Value == "timestampAttribute").FirstOrDefault().Attribute("value").Value;
+                return "ms-Mcs-AdmPwdExpirationTime";
             }
         }
 
@@ -31,12 +25,7 @@ namespace AdmPwd.Utils
         {
             get
             {
-                string codeBase = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
-                string basePath = System.IO.Path.GetDirectoryName(codeBase);
-                string configPath = System.IO.Path.Combine(basePath, ConfigFile);
-
-                XElement root = XElement.Load(configPath);
-                return root.Descendants("add").Where(x => x.Attribute("key").Value == "pwdAttribute").FirstOrDefault().Attribute("value").Value;
+                return "ms-Mcs-AdmPwd";
             }
         }
     }
@@ -50,7 +39,11 @@ namespace AdmPwd.Utils
 
         public static LdapConnection GetLdapConnection(string serverName, ConnectionType type)
         {
-            return new LdapConnection(new LdapDirectoryIdentifier(serverName, (int)type));
+            LdapConnection conn = new LdapConnection(new LdapDirectoryIdentifier(serverName, (int)type));
+            //avoid RODC for write operations
+            if (type == ConnectionType.Ldap)
+                conn.SessionOptions.LocatorFlag |= LocatorFlags.WriteableRequired;
+            return conn;
         }
 
         public static ReadOnlyCollection<string> Search(string filter, string baseDN)

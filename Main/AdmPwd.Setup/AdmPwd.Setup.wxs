@@ -141,7 +141,6 @@
       <Component Id="UI" Directory="AdmPwd" Guid="BA27885E-E54E-49C0-AA08-9DCDF38E17E3" >
         <File Id="AdmPwd.UI" Source="$(var.AdmPwd.UI.TargetDir)\$(var.AdmPwd.UI.TargetFileName)" />
         <File Id="AdmPwd.UI.Shared" Source="$(var.AdmPwd.Utils.TargetDir)\$(var.AdmPwd.Utils.TargetFileName)"/>
-        <File Id="AdmPwd.UI.Shared.Config" Source="$(var.AdmPwd.Utils.ProjectDir)\AdmPwd.Utils.config" />
       </Component>
       <Component Id="AdmPwd.Start" Guid="A325810D-D042-4886-ADEE-92660BEF0850" Directory="AdmPwd.Start">
         <Shortcut Id="ApplicationStartMenuShortcut"
@@ -159,7 +158,6 @@
         <File Id="PS.Module.Formats" Source="$(var.AdmPwd.PS.ProjectDir)\AdmPwd.PS.format.ps1xml"/>
         <File Id="PS.Module.Definition" Source="$(var.AdmPwd.PS.ProjectDir)\AdmPwd.PS.psd1"/>
         <File Id="PS.Module.Shared" Source="$(var.AdmPwd.Utils.TargetDir)\$(var.AdmPwd.Utils.TargetFileName)"/>
-        <File Id="PS.Module.Shared.Config" Source="$(var.AdmPwd.Utils.ProjectDir)\AdmPwd.Utils.config" />
       </Component>
       <Component Id="PS.Help" Directory="AdmPwd.PS.Help" Guid="A1162F99-2E5D-460B-9ED6-D0CD7B2E1564">
         <File Id="PS.Module.Help" Source="$(var.AdmPwd.PS.ProjectDir)\Help\AdmPwd.PS.dll-Help.xml"/>
