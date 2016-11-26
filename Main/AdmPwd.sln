@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AD_Schema", "AD_Schema", "{
 		_Other\AD_Schema\AdmPwd_SchemaUpdate.ldf = _Other\AD_Schema\AdmPwd_SchemaUpdate.ldf
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{BFDA8415-DF13-4FE8-BF79-E9660BDE1B8B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-us", "en-us", "{90ACEE66-385F-4492-ADA4-2926994326ED}"
 	ProjectSection(SolutionItems) = preProject
 		_Other\ADMX\en-US\AdmPwd.adml = _Other\ADMX\en-US\AdmPwd.adml
@@ -35,11 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\app.ico = Solution Items\app.ico
 		Solution Items\GlobalAssemblyInfo.cs = Solution Items\GlobalAssemblyInfo.cs
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PSHelpSource", "PSHelpSource", "{3BD7C125-A2CF-4F90-9D48-6B970F947F3D}"
-	ProjectSection(SolutionItems) = preProject
-		_Other\PSHelpSource\AdmPwd.PS.Help.pshproj = _Other\PSHelpSource\AdmPwd.PS.Help.pshproj
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdmPwd.Setup.CustomActions", "AdmPwd.Setup.CustomActions\AdmPwd.Setup.CustomActions.vcxproj", "{EE229589-D6F5-49C0-917C-52FDB7FFD3D1}"
@@ -179,7 +172,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0F4C0D17-40CC-4ADE-B95A-6931CA181522} = {FE352340-DE74-452C-8E0D-01450E9EDBC7}
 		{2FD3B70E-EE82-4A1C-A54B-A1F07849C3E5} = {FE352340-DE74-452C-8E0D-01450E9EDBC7}
-		{BFDA8415-DF13-4FE8-BF79-E9660BDE1B8B} = {FE352340-DE74-452C-8E0D-01450E9EDBC7}
 		{90ACEE66-385F-4492-ADA4-2926994326ED} = {0F4C0D17-40CC-4ADE-B95A-6931CA181522}
 	EndGlobalSection
 EndGlobal
