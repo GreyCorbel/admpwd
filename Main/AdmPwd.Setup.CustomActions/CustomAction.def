@@ -1,0 +1,5 @@
+LIBRARY "AdmPwd.Setup.CustomActions.dll"
+
+EXPORTS
+
+GenerateRandomPassword

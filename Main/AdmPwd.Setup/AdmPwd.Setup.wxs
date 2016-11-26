@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="Local admin password management solution" Language="1033" Version="!(bind.FileVersion.CSEBinary)" Manufacturer="Microsoft | Services" UpgradeCode="a6461f77-0833-48f5-a8a7-86c3bfb6887a">
+
+    <Package InstallerVersion="300" Compressed="yes" Comments="Version: !(bind.FileVersion.CSEBinary)"/>
+    <Property Id="ALLUSERS"><![CDATA[2]]></Property>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of solution is already installed."/>
+    <MediaTemplate CompressionLevel="high" EmbedCab="yes" />
+
+    <!-- Custom admin account to be created - name to be passed from command line-->
+    <Property Id="CUSTOMADMINNAME" Value="__null__"/>
+    <util:Group Id="Administrators" Name="Administrators"/>
+  
+    <WixVariable Id="WixUIDialogBmp" Value=".\UI\UIDialogBmp.jpg" />
+    <WixVariable Id="WixUIBannerBmp" Value=".\UI\UIBannerBmp.jpg" />
+
+    <UI>
+      <UIRef Id="WixUI_AdmPwd" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+      <InstallUISequence>
+      </InstallUISequence>
+    </UI>
+    
+    <Feature Id="CSE" Title="AdmPwd GPO Extension" Level="1" Description="Installs GPO CSE extension. This component is required to be installed on managed machine." AllowAdvertise="no">
+      <ComponentGroupRef Id="CSEGroup" />
+    </Feature>
+    <Feature Id="Management" Title="Management Tools" Level="10" Description="Installs management tools. This component does not need to be installed on managed machines. It is meant to be installed on admin or user machines" Display="expand" AllowAdvertise="no">
+      <Feature Id="Management.UI" Title="Fat client UI" Level="10" Description="Installs fat client UI and related files" AllowAdvertise="no">
+        <ComponentGroupRef Id="UIGroup" />
+      </Feature>
+      <Feature Id="Management.PS" Title="PowerShell module" Level="10" Description="Installs Powershell module AdmPwd.PS and related files for command line management" AllowAdvertise="no">
+        <ComponentGroupRef Id="PSGroup"/>
+      </Feature>
+      <Feature Id="Management.ADMX" Title="GPO Editor templates" Level="10" Description="Installs ADMX templates for GPO editor. Typically need to be installed on machine where GPOs are edited" AllowAdvertise="no">
+        <ComponentGroupRef Id="GPOTemplates"/>
+      </Feature>
+    </Feature>
+    
+    <!-- Custom actions binary-->
+    <Binary Id="AdmPwd.MSICustomActions" SourceFile="$(var.AdmPwd.Setup.CustomActions.TargetDir)$(var.AdmPwd.Setup.CustomActions.TargetFileName)"/>
+    
+    <!-- Custom action - generate random password -->
+    <Property Id="INITIALPASSWORD" Secure="yes" Hidden="yes"/>
+    
+    <CustomAction Id="GenerateRandomPasswordPwd"
+                  BinaryKey="AdmPwd.MSICustomActions"
+                  DllEntry="GenerateRandomPassword"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no" />
+    <InstallExecuteSequence>
+      <Custom Action="GenerateRandomPasswordPwd" Before="ConfigureUsers">
+         <![CDATA[($AdminAccountCreation=3)]]> 
+      </Custom>
+    </InstallExecuteSequence>
+    <!-- End of custom action -->
+
+    <Icon Id="app.ico" SourceFile="$(var.SolutionDir)Solution Items\app.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="app.ico" />
+  </Product>
+
+  <Fragment>
+        <UI Id="WixUI_AdmPwd">
+            <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+            <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+            <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+            <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+            <Property Id="WixUI_Mode" Value="Mondo" />
+            <Property Id="WixUI_InstallMode" Value="InstallCustom" />
+            <Property Id="LicenseAccepted" Value="1"/>
+
+            <DialogRef Id="ErrorDlg" />
+            <DialogRef Id="FatalError" />
+            <DialogRef Id="FilesInUse" />
+            <DialogRef Id="MsiRMFilesInUse" />
+            <DialogRef Id="PrepareDlg" />
+            <DialogRef Id="ProgressDlg" />
+            <DialogRef Id="ResumeDlg" />
+            <DialogRef Id="UserExit" />
+
+            <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+            <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">NOT Installed AND NOT PATCH</Publish>
+            <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+
+            <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+            <Publish Dialog="SetupTypeDlg" Control="TypicalButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+            <Publish Dialog="SetupTypeDlg" Control="CustomButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+            <Publish Dialog="SetupTypeDlg" Control="CompleteButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+
+            <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">WixUI_InstallMode = "Change"</Publish>
+            <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">WixUI_InstallMode = "InstallCustom"</Publish>
+            <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">WixUI_InstallMode = "InstallCustom"</Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="3">WixUI_InstallMode = "Change"</Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="4">WixUI_InstallMode = "Repair" OR WixUI_InstallMode = "Remove"</Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">WixUI_InstallMode = "Update"</Publish>
+
+            <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+            <Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+            <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+        </UI>
+        <UIRef Id="WixUI_Common" />
+    </Fragment>
+
+  <?if $(var.Platform) = "x64"?>
+    <?include AdmPwd.Setup.x64.wxi ?>
+  <?elseif $(var.Platform) = "x86"?>
+    <?include AdmPwd.Setup.x86.wxi ?>
+  <?endif?>
+
+  <Fragment>
+    <ComponentGroup Id="CSEGroup">
+      <Component Id="CSE" Guid="A80C978F-5C6E-4AFD-B6B7-8143428544DB" Directory="CSE">
+        <File Id="CSEBinary" Source="$(var.AdmPwd.TargetDir)\$(var.AdmPwd.TargetFileName)"/>
+        <RegistryKey Id="CSEReg" Root="HKLM" Key="Software\Microsoft\Windows NT\CurrentVersion\Winlogon\GPextensions\{D76B9641-3288-4f75-942D-087DE603E3EA}" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+          <RegistryValue Id="DllName" Action="write" Name="DllName" Type="string" Value="$(var.PFDir)AdmPwd\CSE\$(var.AdmPwd.TargetFileName)"/>
+          <RegistryValue Id="NoUserPolicy" Name="NoUserPolicy" Type="integer" Value="1"/>
+          <RegistryValue Id="ProcessGroupPolicy" Name="ProcessGroupPolicy" Type="string" Value="ProcessGroupPolicy" />
+          <RegistryValue Id="Default" Type="string" Value="AdmPwd"/>
+        </RegistryKey>
+        <RegistryKey Id="CSE.EventReg" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Root="HKLM" Key="System\CurrentControlSet\Services\EventLog\Application\AdmPwd" >
+          <RegistryValue Id="CSE.EventMessageFile" Name="EventMessageFile" Type="string" Value="$(var.PFDir)AdmPwd\CSE\$(var.AdmPwd.TargetFileName)"/>
+          <RegistryValue Id="CSE.TypesSupported" Name="TypesSupported" Type="integer" Value="7"/>
+        </RegistryKey>
+      </Component>
+      <Component Id="AdminAccountCreation" Guid="0980235D-475D-4992-B9A9-D5474028F767" Directory="TARGETDIR">
+        <Condition><![CDATA[CUSTOMADMINNAME <> "__null__"]]></Condition>
+        <util:User Id="CustomAdmin" CreateUser="yes" FailIfExists="no" Name="[CUSTOMADMINNAME]" Password="[INITIALPASSWORD]" PasswordNeverExpires="yes" CanNotChangePassword="yes" RemoveOnUninstall="yes">
+          <util:GroupRef Id="Administrators"/>
+        </util:User>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="UIGroup">
+      <Component Id="UI" Directory="AdmPwd" Guid="BA27885E-E54E-49C0-AA08-9DCDF38E17E3" >
+        <File Id="AdmPwd.UI" Source="$(var.AdmPwd.UI.TargetDir)\$(var.AdmPwd.UI.TargetFileName)" />
+        <File Id="AdmPwd.UI.Shared" Source="$(var.AdmPwd.Utils.TargetDir)\$(var.AdmPwd.Utils.TargetFileName)"/>
+        <File Id="AdmPwd.UI.Shared.Config" Source="$(var.AdmPwd.Utils.ProjectDir)\AdmPwd.Utils.config" />
+      </Component>
+      <Component Id="AdmPwd.Start" Guid="A325810D-D042-4886-ADEE-92660BEF0850" Directory="AdmPwd.Start">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="AdmPwd UI"
+                  Description="AdmPwd fat client"
+                  Target="[AdmPwd]\AdmPwd.UI.exe"
+                  WorkingDirectory="AdmPwd"/>
+        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software/Micosoft/AdmPwd" Value="" Type="string" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="PSGroup">
+      <Component Id="PS" Directory="AdmPwd.PS" Guid="B790B118-E1FE-4619-851E-9481B4515427">
+        <File Id="PS.Module" Source="$(var.AdmPwd.PS.TargetDir)\$(var.AdmPwd.PS.TargetFileName)"/>
+        <File Id="PS.Module.Formats" Source="$(var.AdmPwd.PS.ProjectDir)\AdmPwd.PS.format.ps1xml"/>
+        <File Id="PS.Module.Definition" Source="$(var.AdmPwd.PS.ProjectDir)\AdmPwd.PS.psd1"/>
+        <File Id="PS.Module.Shared" Source="$(var.AdmPwd.Utils.TargetDir)\$(var.AdmPwd.Utils.TargetFileName)"/>
+        <File Id="PS.Module.Shared.Config" Source="$(var.AdmPwd.Utils.ProjectDir)\AdmPwd.Utils.config" />
+      </Component>
+      <Component Id="PS.Help" Directory="AdmPwd.PS.Help" Guid="A1162F99-2E5D-460B-9ED6-D0CD7B2E1564">
+        <File Id="PS.Module.Help" Source="$(var.AdmPwd.PS.ProjectDir)\Help\AdmPwd.PS.dll-Help.xml"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="GPOTemplates">
+      <Component Id="ADMX" Directory="dir.admx" Guid="47DF61E1-C3ED-4BEC-B0F0-A9F0A686B6C8">
+        <File Id="AdmPwd.admx" Source="$(var.SolutionDir)\_Other\Admx\AdmPwd.admx" />
+      </Component>
+      <Component Id="ADML" Directory="dir.adml.en.us" Guid="FA3893A8-9607-4F27-8316-7E4AF0682346">
+        <File Id="AdmPwd.adml" Source="$(var.SolutionDir)\_Other\Admx\en-us\AdmPwd.adml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

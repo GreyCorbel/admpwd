@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <Fragment>
+    <?define PFDir=[ProgramFilesFolder]?>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="AdmPwd.Start" Name="AdmPwd"/>
+      </Directory>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="AdmPwd" Name="AdmPwd">
+          <Directory Id="CSE" Name="CSE"/>
+        </Directory>
+      </Directory>
+      <Directory Id="WindowsFolder">
+        <Directory Id="dir.admx" Name="PolicyDefinitions">
+          <Directory Id="dir.adml.en.us" Name="en-US"/>
+        </Directory>
+      </Directory>
+      <Directory Id="SystemFolder">
+        <Directory Id="WindowsPowershell" Name="WindowsPowershell">
+          <Directory Id="psVer" Name="v1.0">
+            <Directory Id="Modules" Name="Modules">
+              <Directory Id="AdmPwd.PS" Name="AdmPwd.PS">
+                <Directory Id="AdmPwd.PS.Help" Name="en-US" />
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+</Include>
