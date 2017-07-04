@@ -21,6 +21,9 @@
     <ClCompile Include="GenerateRandomPassword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GetAdminsGroupName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CustomAction.def">

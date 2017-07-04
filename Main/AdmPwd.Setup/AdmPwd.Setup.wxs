@@ -10,7 +10,7 @@
 
     <!-- Custom admin account to be created - name to be passed from command line-->
     <Property Id="CUSTOMADMINNAME" Value="__null__"/>
-    <util:Group Id="Administrators" Name="Administrators"/>
+    <util:Group Id="AdminsGroup" Name="[ADMINSGROUPNAME]"/>
   
     <WixVariable Id="WixUIDialogBmp" Value=".\UI\UIDialogBmp.jpg" />
     <WixVariable Id="WixUIBannerBmp" Value=".\UI\UIBannerBmp.jpg" />
@@ -40,6 +40,22 @@
     <!-- Custom actions binary-->
     <Binary Id="AdmPwd.MSICustomActions" SourceFile="$(var.AdmPwd.Setup.CustomActions.TargetDir)$(var.AdmPwd.Setup.CustomActions.TargetFileName)"/>
     
+    <!-- Custom action - get admins group name -->
+    <Property Id="ADMINSGROUPNAME" Hidden="no" Secure="no" Value="Admins" />
+
+    <CustomAction Id="GetAdminsGroupName"
+                  BinaryKey="AdmPwd.MSICustomActions"
+                  DllEntry="GetAdminsGroupName"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no" />
+    <InstallExecuteSequence>
+      <Custom Action="GetAdminsGroupName" Before="ConfigureUsers">
+        <![CDATA[($AdminAccountCreation=3)]]>
+      </Custom>
+    </InstallExecuteSequence>
+    <!-- End of custom action -->
+
     <!-- Custom action - generate random password -->
     <Property Id="INITIALPASSWORD" Secure="yes" Hidden="yes"/>
     
@@ -133,7 +149,7 @@
       <Component Id="AdminAccountCreation" Guid="0980235D-475D-4992-B9A9-D5474028F767" Directory="TARGETDIR">
         <Condition><![CDATA[CUSTOMADMINNAME <> "__null__"]]></Condition>
         <util:User Id="CustomAdmin" CreateUser="yes" FailIfExists="no" Name="[CUSTOMADMINNAME]" Password="[INITIALPASSWORD]" PasswordNeverExpires="yes" CanNotChangePassword="yes" RemoveOnUninstall="yes">
-          <util:GroupRef Id="Administrators"/>
+          <util:GroupRef Id="AdminsGroup"/>
         </util:User>
       </Component>
     </ComponentGroup>
