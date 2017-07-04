@@ -1,0 +1,78 @@
+# 
+# Schema extension definition for AdmPwd extension
+# New attributes:
+#	ms-MCS-AdmPwd - string containing the password
+#	ms-MCS-AdmPwdExpirationTime 8 byte integer containing  UTC filetime of password expiration time
+#
+# New classes:
+#   [None]
+#
+# Schema root: 1.2.840.113556.1.8000.2554.50051.45980.28112.18903.35903.6685103.1224907
+#  1 ... classes  
+#  2 ... attributes
+#
+# v 1.0, 16.5.2012, Jiri Formacek, Microsoft | Services
+#
+version: 1
+
+dn: CN=ms-MCS-AdmPwd,CN=X
+changetype: Add
+objectClass: attributeSchema
+ldapDisplayName: ms-MCS-AdmPwd
+adminDisplayName: ms-MCS-AdmPwd
+adminDescription: Stores password of local Administrator account on workstation
+attributeId: 1.2.840.113556.1.8000.2554.50051.45980.28112.18903.35903.6685103.1224907.2.1
+#Syntax=Printable case sensitive string
+attributeSyntax: 2.5.5.5
+omSyntax: 19
+isSingleValued: TRUE
+systemOnly: FALSE
+#do not index this attribute, confidential attribute, preserved on tombstone
+#change to 136 if you have RODC and WANT replicate admin passwords to RODC
+searchFlags: 904
+#change to TRUE if you have multiple domains in forest and want to search against GC from admin web
+isMemberOfPartialAttributeSet: FALSE
+showInAdvancedViewOnly: FALSE
+
+dn: CN=ms-MCS-AdmPwdExpirationTime,CN=X
+changetype: Add
+objectClass: attributeSchema
+ldapDisplayName: ms-MCS-AdmPwdExpirationTime
+adminDisplayName: ms-MCS-AdmPwdExpirationTime
+adminDescription: Stores timestamp of last password change
+attributeId: 1.2.840.113556.1.8000.2554.50051.45980.28112.18903.35903.6685103.1224907.2.2
+#Syntax=Large Integer
+attributeSyntax: 2.5.5.16
+omSyntax: 65
+isSingleValued: TRUE
+systemOnly: FALSE
+#do not index this attribute
+searchFlags: 0
+#change to TRUE if you have multiple domains in forest and want to search against GC from admin web
+isMemberOfPartialAttributeSet: FALSE
+showInAdvancedViewOnly: FALSE
+
+# add attributes to schema
+
+dn:
+changetype: Modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+# add new attributes to optional attributes set of computer object
+
+dn: CN=computer,CN=X
+changetype: Modify
+add: mayContain
+mayContain: ms-MCS-AdmPwd
+mayContain: ms-MCS-AdmPwdExpirationTime
+-
+
+# Perform schema update
+
+dn:
+changetype: Modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
