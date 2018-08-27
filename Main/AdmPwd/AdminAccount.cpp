@@ -83,14 +83,14 @@ AdminAccount::~AdminAccount()
 }
 
 _Use_decl_annotations_
-HRESULT AdminAccount::ResetPassword(TCHAR* NewPasword)
+HRESULT AdminAccount::ResetPassword(LPCTSTR NewPasword)
 {
 	HRESULT hr = S_OK;
 	USER_INFO_1003 ui1003;
 	DWORD dwErr = 0;
 	NET_API_STATUS rslt = NERR_Success;
 
-	ui1003.usri1003_password = NewPasword;
+	ui1003.usri1003_password = const_cast<TCHAR*>(NewPasword);
 
 	rslt=NetUserSetInfo(nullptr, _AccountName, 1003, (LPBYTE) &ui1003, &dwErr);
 	if (rslt != NERR_Success)

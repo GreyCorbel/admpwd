@@ -26,8 +26,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 STRINGTABLE
 BEGIN
-    IDS_ATTR_PWD            "ms-MCS-AdmPwd"
-    IDS_ATTR_PWD_TIMESTAMP  "ms-MCS-AdmPwdExpirationTime"
+    IDS_ATTR_PWD            "ms-Mcs-AdmPwd"
+    IDS_ATTR_PWD_TIMESTAMP  "ms-Mcs-AdmPwdExpirationTime"
 END
 
 #endif    // Neutral resources
@@ -47,8 +47,8 @@ LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,2,1,0
- PRODUCTVERSION 5,2,1,0
+ FILEVERSION 6,3,0,0
+ PRODUCTVERSION 6,3,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -63,14 +63,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Microsoft"
+            VALUE "CompanyName", "GreyCorbel Solutions"
             VALUE "FileDescription", "AdmPwd GPO Extension: manage local admin account password"
-            VALUE "FileVersion", "5.2.1.0"
+            VALUE "FileVersion", "6.3.0.0"
             VALUE "InternalName", "AdmPwd"
-            VALUE "LegalCopyright", "Copyright (C) 2010 - 2017 Jiri Formacek"
+            VALUE "LegalCopyright", "Copyright (C) 2010 - 2018 Jiri Formacek"
             VALUE "OriginalFilename", "AdmPwd.dll"
             VALUE "ProductName", "AdmPwd GPO CSE"
-            VALUE "ProductVersion", "5.2.1.0"
+            VALUE "ProductVersion", "6.3.0.0"
         END
     END
     BLOCK "VarFileInfo"

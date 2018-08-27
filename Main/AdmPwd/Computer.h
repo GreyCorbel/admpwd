@@ -5,7 +5,7 @@ public:
 	Computer();
 	~Computer();
 
-	HRESULT ReportPassword(_In_ TCHAR *password, _In_ FILETIME* timestamp, _In_ DWORD dwPasswordAge);
+	HRESULT ReportPassword(_In_ LPCTSTR password, _In_ FILETIME* timestamp, _In_ DWORD dwPasswordAge);
 	HRESULT Load();
 	//password complexity
 	__declspec(property(get = GET_PasswordExpirationTimestamp)) unsigned __int64 PasswordExpirationTimestamp;

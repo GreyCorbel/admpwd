@@ -94,7 +94,8 @@ ADMPWD_API DWORD APIENTRY ProcessGroupPolicy(
 			AdminAccount admin(config.AdminAccountName);
 
 			PasswordGenerator gen(config.PasswordComplexity, config.PasswordLength);
-			TCHAR *newPwd = gen.Generate();
+			gen.Generate();
+			LPCTSTR newPwd = gen.Password;
 			
 			//report new password and timestamp to AD
 			GetSystemTimeAsFileTime(&currentTime);

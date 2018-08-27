@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Name="Local admin password management solution" Language="1033" Version="!(bind.FileVersion.CSEBinary)" Manufacturer="Microsoft | Services" UpgradeCode="a6461f77-0833-48f5-a8a7-86c3bfb6887a">
+  <Product Id="*" Name="Local admin password management solution" Language="1033" Version="!(bind.FileVersion.CSEBinary)" Manufacturer="GreyCorbel Solutions" UpgradeCode="a6461f77-0833-48f5-a8a7-86c3bfb6887a">
 
     <Package InstallerVersion="300" Compressed="yes" Comments="Version: !(bind.FileVersion.CSEBinary)"/>
     <Property Id="ALLUSERS"><![CDATA[2]]></Property>

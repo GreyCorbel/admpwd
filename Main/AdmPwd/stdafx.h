@@ -18,7 +18,7 @@
 #include <winerror.h>
 #include <sddl.h>
 
-#include <Wincrypt.h>
+#include <bcrypt.h>
 #include <new.h>
 
 #include <lm.h>

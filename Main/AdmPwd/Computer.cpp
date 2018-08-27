@@ -138,7 +138,7 @@ Cleanup:
 
 
 _Use_decl_annotations_
-HRESULT Computer::ReportPassword(TCHAR *password, FILETIME* timestamp, DWORD dwPasswordAge)
+HRESULT Computer::ReportPassword(LPCTSTR password, FILETIME* timestamp, DWORD dwPasswordAge)
 {
 	LDAPMod ts, pwd;
 	ULARGE_INTEGER uli;
@@ -178,7 +178,7 @@ HRESULT Computer::ReportPassword(TCHAR *password, FILETIME* timestamp, DWORD dwP
 		hr = HRESULT_FROM_WIN32(GetLastError());
 		goto Cleanup;
 	}
-	TCHAR* pPassword[2] = { password, nullptr };
+	TCHAR* pPassword[2] = { const_cast<TCHAR*>(password), nullptr };
 	pwd.mod_op = LDAP_MOD_REPLACE;
 	pwd.mod_type = attrPwdName;
 	pwd.mod_values = pPassword;
