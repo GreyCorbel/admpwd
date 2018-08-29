@@ -167,7 +167,7 @@
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)admpwd.dll</OutputFile>
       <ModuleDefinitionFile>AdmPwd.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -270,7 +270,7 @@
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)admpwd.dll</OutputFile>
       <ModuleDefinitionFile>AdmPwd.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -323,7 +323,7 @@
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)admpwd.dll</OutputFile>
       <ModuleDefinitionFile>AdmPwd.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -422,7 +422,7 @@
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Secur32.lib;NetApi32.lib;WLdap32.lib;strsafe.lib;shlwapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)admpwd.dll</OutputFile>
       <ModuleDefinitionFile>AdmPwd.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>

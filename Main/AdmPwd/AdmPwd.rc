@@ -1,6 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
+#include "..\Solution Items\Version.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -47,8 +48,8 @@ LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 6,3,0,0
- PRODUCTVERSION 6,3,0,0
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -63,14 +64,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "GreyCorbel Solutions"
+            VALUE "CompanyName", COMPANYNAME
             VALUE "FileDescription", "AdmPwd GPO Extension: manage local admin account password"
-            VALUE "FileVersion", "6.3.0.0"
+            VALUE "FileVersion", FileVersion
             VALUE "InternalName", "AdmPwd"
-            VALUE "LegalCopyright", "Copyright (C) 2010 - 2018 Jiri Formacek"
+            VALUE "LegalCopyright", COPYRIGHT
             VALUE "OriginalFilename", "AdmPwd.dll"
-            VALUE "ProductName", "AdmPwd GPO CSE"
-            VALUE "ProductVersion", "6.3.0.0"
+            VALUE "ProductName", PRODUCT
+            VALUE "ProductVersion", ProductVersion
         END
     END
     BLOCK "VarFileInfo"

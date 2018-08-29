@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\app.ico = Solution Items\app.ico
 		Solution Items\GlobalAssemblyInfo.cs = Solution Items\GlobalAssemblyInfo.cs
+		Solution Items\Version.h = Solution Items\Version.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdmPwd.Setup.CustomActions", "AdmPwd.Setup.CustomActions\AdmPwd.Setup.CustomActions.vcxproj", "{EE229589-D6F5-49C0-917C-52FDB7FFD3D1}"
@@ -124,7 +125,8 @@ Global
 		{EDB0C01E-8DD3-4D72-B445-01D11184AE68}.Release|x86.ActiveCfg = Release|Any CPU
 		{EDB0C01E-8DD3-4D72-B445-01D11184AE68}.Release|x86.Build.0 = Release|Any CPU
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|ARM64.ActiveCfg = Debug|x86
+		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|ARM64.Build.0 = Debug|ARM64
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|Win32.ActiveCfg = Debug|x86
@@ -134,7 +136,8 @@ Global
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|x86.ActiveCfg = Debug|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Debug|x86.Build.0 = Debug|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|Any CPU.ActiveCfg = Release|x86
-		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|ARM64.ActiveCfg = Release|x86
+		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|ARM64.Build.0 = Release|ARM64
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A7243ABF-20DC-46D4-BE20-C023A27838EF}.Release|Win32.ActiveCfg = Release|x86

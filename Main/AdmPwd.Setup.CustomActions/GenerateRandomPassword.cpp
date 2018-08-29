@@ -14,7 +14,8 @@ UINT __stdcall GenerateRandomPassword(MSIHANDLE hInstall)
 
 	WcaLog(LOGMSG_STANDARD, "Initialized.");
 
-	TCHAR *newPwd = gen.Generate();
+	gen.Generate();
+	LPCTSTR newPwd = gen.Password;
 	WcaLog(LOGMSG_STANDARD, "Password generated.");
 
 	hr=WcaSetProperty(L"INITIALPASSWORD", newPwd);

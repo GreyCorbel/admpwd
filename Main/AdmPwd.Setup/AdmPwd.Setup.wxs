@@ -36,7 +36,7 @@
         <ComponentGroupRef Id="GPOTemplates"/>
       </Feature>
     </Feature>
-    
+
     <!-- Custom actions binary-->
     <Binary Id="AdmPwd.MSICustomActions" SourceFile="$(var.AdmPwd.Setup.CustomActions.TargetDir)$(var.AdmPwd.Setup.CustomActions.TargetFileName)"/>
     
@@ -67,11 +67,12 @@
                   HideTarget="no" />
     <InstallExecuteSequence>
       <Custom Action="GenerateRandomPasswordPwd" Before="ConfigureUsers">
-         <![CDATA[($AdminAccountCreation=3)]]> 
+          <![CDATA[($AdminAccountCreation=3)]]> 
       </Custom>
     </InstallExecuteSequence>
     <!-- End of custom action -->
-
+    
+    
     <Icon Id="app.ico" SourceFile="$(var.SolutionDir)Solution Items\app.ico"/>
     <Property Id="ARPPRODUCTICON" Value="app.ico" />
   </Product>
@@ -129,6 +130,8 @@
     <?include AdmPwd.Setup.x64.wxi ?>
   <?elseif $(var.Platform) = "x86"?>
     <?include AdmPwd.Setup.x86.wxi ?>
+  <?elseif $(var.Platform) = "ARM64"?>
+    <?include AdmPwd.Setup.ARM64.wxi ?>
   <?endif?>
 
   <Fragment>
@@ -146,6 +149,7 @@
           <RegistryValue Id="CSE.TypesSupported" Name="TypesSupported" Type="integer" Value="7"/>
         </RegistryKey>
       </Component>
+
       <Component Id="AdminAccountCreation" Guid="0980235D-475D-4992-B9A9-D5474028F767" Directory="TARGETDIR">
         <Condition><![CDATA[CUSTOMADMINNAME <> "__null__"]]></Condition>
         <util:User Id="CustomAdmin" CreateUser="yes" FailIfExists="no" Name="[CUSTOMADMINNAME]" Password="[INITIALPASSWORD]" PasswordNeverExpires="yes" CanNotChangePassword="yes" RemoveOnUninstall="yes">
