@@ -68,6 +68,7 @@ Config::~Config()
 	}
 }
 
+_Use_decl_annotations_
 HRESULT Config::GetRegistryDWORD(HKEY hReg, LPCTSTR regValueName, DWORD *retVal) {
 	LONG lResult;
 	DWORD dwBuffLen = sizeof(*retVal);
@@ -85,6 +86,7 @@ HRESULT Config::GetRegistryDWORD(HKEY hReg, LPCTSTR regValueName, DWORD *retVal)
 	return HRESULT_FROM_WIN32(lResult);
 }
 
+_Use_decl_annotations_
 HRESULT Config::GetRegistryString(HKEY hReg, LPCTSTR regValueName, TCHAR **retVal, DWORD *dwStringLen)
 {
 	LONG lResult;

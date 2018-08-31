@@ -80,18 +80,32 @@ ADMPWD_API DWORD APIENTRY ProcessGroupPolicy(
 
 			lDaysToChange = 0;
 		}
+
+		//get local Administrator account we're managing password for
+		LogData.dwID = S_GET_ADMIN;
+		AdminAccount admin(config.AdminAccountName);
 		if(lDaysToChange)
 		{
-			LogData.dwID=S_CHANGE_PWD_NOT_YET;
-			LogData.info1=(DWORD)lDaysToChange;
-			LogAppEvent(&LogData);
+			bool wasPasswordEverManaged = false;
+			LogData.hr = admin.HasPasswordEverManaged(&wasPasswordEverManaged);
+			if (!wasPasswordEverManaged)
+			{
+				//force password change
+				lDaysToChange = 0;
+				LogData.dwID = S_NEVER_MANAGED;
+				LogAppEvent(&LogData);
+
+			}
+			else
+			{
+				LogData.dwID = S_CHANGE_PWD_NOT_YET;
+				LogData.info1 = (DWORD)lDaysToChange;
+				LogAppEvent(&LogData);
+			}
 		}
 		else
 		{
 			//it's time to change the password
-			//get local Administrator account we're managing password for
-			LogData.dwID = S_GET_ADMIN;
-			AdminAccount admin(config.AdminAccountName);
 
 			PasswordGenerator gen(config.PasswordComplexity, config.PasswordLength);
 			gen.Generate();
@@ -220,6 +234,7 @@ void LogAppEvent(LPLOGDATA pLogData)
 		case S_NOT_ENABLED:
 		case S_CHANGE_PWD_SUCCESS:
 		case S_REPORT_PWD_SUCCESS:
+		case S_NEVER_MANAGED:
 			BOOL bRslt;
 			bRslt=ReportEvent(h, EVENTLOG_INFORMATION_TYPE,	0, pLogData->dwID, NULL, 0, 0, NULL, NULL);
 			if (!bRslt)

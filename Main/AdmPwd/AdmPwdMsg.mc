@@ -71,3 +71,8 @@ MessageId=16 Severity=Informational SymbolicName=S_NOT_ENABLED
 Language=English
 Admin account management not enabled, exiting.
 .
+
+MessageId=17 Severity=Informational SymbolicName=S_NEVER_MANAGED
+Language=English
+Admin account was never managed. Changing the password now.
+.

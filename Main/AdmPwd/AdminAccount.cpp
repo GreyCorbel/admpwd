@@ -95,6 +95,40 @@ HRESULT AdminAccount::ResetPassword(LPCTSTR NewPasword)
 	rslt=NetUserSetInfo(nullptr, _AccountName, 1003, (LPBYTE) &ui1003, &dwErr);
 	if (rslt != NERR_Success)
 		hr = HRESULT_FROM_WIN32(rslt);
+	
+	//flag password change with user account
+	USER_INFO_1012 ui;
+
+	ui.usri1012_usr_comment = _T("1");
+	rslt = NetUserSetInfo(nullptr, _AccountName, 1012, (LPBYTE)&ui, &dwErr);
+	if (rslt != NERR_Success)
+		hr = HRESULT_FROM_WIN32(rslt);
+
+	return hr;
+}
+
+_Use_decl_annotations_
+HRESULT AdminAccount::HasPasswordEverManaged(_Out_ bool *pResult)
+{
+	HRESULT hr = S_OK;
+	LPUSER_INFO_1012 pui = nullptr;
+	NET_API_STATUS rslt = NERR_Success;
+
+	//this is to prevent ever changing of password in case that NetUserGetInfo() fails
+	*pResult = true;
+
+	rslt = NetUserGetInfo(nullptr, _AccountName, 1012, (LPBYTE*)&pui);
+	if (rslt == NERR_Success)
+	{
+		*pResult = _tcscmp(pui->usri1012_usr_comment,_T("1"))==0;
+	}
+	else
+	{
+		hr = HRESULT_FROM_WIN32(rslt);
+	}
+
+	if (pui != nullptr)
+		NetApiBufferFree(pui);
 
 	return hr;
 }

@@ -152,3 +152,12 @@
 //
 #define S_NOT_ENABLED                    0x40000010L
 
+//
+// MessageId: S_NEVER_MANAGED
+//
+// MessageText:
+//
+// Admin account was never managed. Changing the password now.
+//
+#define S_NEVER_MANAGED                  0x40000011L
+
