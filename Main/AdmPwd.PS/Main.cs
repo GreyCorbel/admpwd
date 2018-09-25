@@ -194,7 +194,7 @@ namespace AdmPwd.PS
                 throw new AmbiguousResultException("More than one object found, search using distinguishedName instead");
             }
             if(OUs.Count==0)
-                throw new NotFoundException("Object not found");
+                throw new NotFoundException($"Object not found: {Identity}");
 
 
             ActiveDirectorySecurity sec = DirectoryUtils.GetObjectSecurity(conn, OUs[0].DistinguishedName, System.DirectoryServices.Protocols.SecurityMasks.Dacl);
@@ -205,8 +205,15 @@ namespace AdmPwd.PS
             System.DirectoryServices.PropertyAccessRule rule;
             Guid attributeGuid;
 
-            // read ms-Mcs-AdmPwdExpirationTime on computer objects
-            attributeGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.TimestampAttributeName, SchemaObjectType.Attribute);
+            // Read + Write ms-Mcs-AdmPwdExpirationTime on computer objects
+            try
+            {
+                attributeGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.TimestampAttributeName, SchemaObjectType.Attribute);
+            }
+            catch (Exception)
+            {
+                throw new NotFoundException($"Object not found: {Constants.TimestampAttributeName}");
+            }
             rule = new System.DirectoryServices.PropertyAccessRule(selfSid,
                 System.Security.AccessControl.AccessControlType.Allow,
                 PropertyAccess.Read,
@@ -214,9 +221,6 @@ namespace AdmPwd.PS
                 inheritedObjectGuid
                 );
             sec.AddAccessRule(rule);
-
-            // write ms-Mcs-AdmPwdExpirationTime on computer objects
-            attributeGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.TimestampAttributeName, SchemaObjectType.Attribute);
             rule = new System.DirectoryServices.PropertyAccessRule(selfSid,
                 System.Security.AccessControl.AccessControlType.Allow,
                 PropertyAccess.Write,
@@ -225,8 +229,15 @@ namespace AdmPwd.PS
                 );
             sec.AddAccessRule(rule);
 
-            // write ms-Mcs-AdmPwd on computer objects
-            attributeGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.PasswordAttributeName, SchemaObjectType.Attribute);
+            // Write ms-Mcs-AdmPwd on computer objects
+            try
+            {
+                attributeGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.PasswordAttributeName, SchemaObjectType.Attribute);
+            }
+            catch (Exception)
+            {
+                throw new NotFoundException($"Object not found: {Constants.PasswordAttributeName}");
+            }
             rule = new System.DirectoryServices.PropertyAccessRule(selfSid,
                 System.Security.AccessControl.AccessControlType.Allow,
                 PropertyAccess.Write,
@@ -438,15 +449,31 @@ namespace AdmPwd.PS
             }
 
             if (OUs.Count == 0)
-                throw new NotFoundException("Object not found");
+                throw new NotFoundException($"Object not found: {Identity}");
 
             ActiveDirectorySecurity sec = DirectoryUtils.GetObjectSecurity(conn, OUs[0].DistinguishedName, System.DirectoryServices.Protocols.SecurityMasks.Dacl);
+            
             //apply permissions only to computer objects
             Guid inheritedObjectGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, "computer", SchemaObjectType.Class);
-            Guid timestampGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.TimestampAttributeName, SchemaObjectType.Attribute);
-            Guid pwdGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.PasswordAttributeName, SchemaObjectType.Attribute);
+            Guid timestampGuid;
+            Guid pwdGuid;
+            try
+            {
+                timestampGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.TimestampAttributeName, SchemaObjectType.Attribute);
+            }
+            catch (Exception)
+            {
+                throw new NotFoundException($"Object not found: {Constants.TimestampAttributeName}");
+            }
+            try
+            {
+                pwdGuid = DirectoryUtils.GetSchemaGuid(conn, forestRootDomain.SchemaNamingContext, Constants.PasswordAttributeName, SchemaObjectType.Attribute);
+            }
+            catch (Exception)
+            {
+                throw new NotFoundException($"Object not found: {Constants.PasswordAttributeName}");
+            }
 
-            //System.DirectoryServices.PropertyAccessRule rule;
             System.DirectoryServices.ActiveDirectoryAccessRule rule;
             foreach (string principalName in AllowedPrincipals)
             {
