@@ -1,7 +1,7 @@
 # AdmPwd project
 This is source code for AdmPwd project that has been previously hosted on MSDN gallery - project has been used as base for Microsoft branded LAPS solution.
 
-Moved to github so as make it easier to allow cooperation, contribution and development of the solution.
+Moved to github so as make it easier to allow cooperation, contribution and development of the solution. For details on current functionality, see release note for releases.
 
 Feel free to fork and bring updates
 
