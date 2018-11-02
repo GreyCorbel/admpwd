@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="Local admin password management solution" Language="1033" Version="!(bind.FileVersion.CSEBinary)" Manufacturer="GreyCorbel Solutions" UpgradeCode="a6461f77-0833-48f5-a8a7-86c3bfb6887a">
 
-    <Package InstallerVersion="300" Compressed="yes" Comments="Version: !(bind.FileVersion.CSEBinary)"/>
+    <Package InstallerVersion="500" Compressed="yes" Comments="Version: !(bind.FileVersion.CSEBinary)"/>
     <Property Id="ALLUSERS"><![CDATA[2]]></Property>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of solution is already installed."/>
