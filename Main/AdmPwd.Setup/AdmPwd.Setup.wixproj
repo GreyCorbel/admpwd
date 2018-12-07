@@ -44,6 +44,8 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <WixVariables>
     </WixVariables>
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AdmPwd.Setup.wxs" />

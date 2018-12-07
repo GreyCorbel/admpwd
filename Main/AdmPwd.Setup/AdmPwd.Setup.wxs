@@ -10,8 +10,9 @@
 
     <!-- Custom admin account to be created - name to be passed from command line-->
     <Property Id="CUSTOMADMINNAME" Value="__null__"/>
-    <util:Group Id="AdminsGroup" Name="[ADMINSGROUPNAME]"/>
-  
+    <?ifndef PURE64?>
+      <util:Group Id="AdminsGroup" Name="[ADMINSGROUPNAME]"/>
+    <?endif?>
     <WixVariable Id="WixUIDialogBmp" Value=".\UI\UIDialogBmp.jpg" />
     <WixVariable Id="WixUIBannerBmp" Value=".\UI\UIBannerBmp.jpg" />
 
@@ -36,6 +37,8 @@
         <ComponentGroupRef Id="GPOTemplates"/>
       </Feature>
     </Feature>
+
+    <?ifndef PURE64?>
 
     <!-- Custom actions binary-->
     <Binary Id="AdmPwd.MSICustomActions" SourceFile="$(var.AdmPwd.Setup.CustomActions.TargetDir)$(var.AdmPwd.Setup.CustomActions.TargetFileName)"/>
@@ -72,6 +75,7 @@
     </InstallExecuteSequence>
     <!-- End of custom action -->
     
+    <?endif?>
     
     <Icon Id="app.ico" SourceFile="$(var.SolutionDir)Solution Items\app.ico"/>
     <Property Id="ARPPRODUCTICON" Value="app.ico" />
@@ -149,13 +153,15 @@
           <RegistryValue Id="CSE.TypesSupported" Name="TypesSupported" Type="integer" Value="7"/>
         </RegistryKey>
       </Component>
-
+      
+    <?ifndef PURE64?>
       <Component Id="AdminAccountCreation" Guid="0980235D-475D-4992-B9A9-D5474028F767" Directory="TARGETDIR">
         <Condition><![CDATA[CUSTOMADMINNAME <> "__null__"]]></Condition>
         <util:User Id="CustomAdmin" CreateUser="yes" FailIfExists="no" Name="[CUSTOMADMINNAME]" Password="[INITIALPASSWORD]" PasswordNeverExpires="yes" CanNotChangePassword="yes" RemoveOnUninstall="yes">
           <util:GroupRef Id="AdminsGroup"/>
         </util:User>
       </Component>
+    <?endif?>
     </ComponentGroup>
     <ComponentGroup Id="UIGroup">
       <Component Id="UI" Directory="AdmPwd" Guid="BA27885E-E54E-49C0-AA08-9DCDF38E17E3" >
