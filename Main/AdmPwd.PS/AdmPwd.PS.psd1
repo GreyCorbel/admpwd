@@ -67,16 +67,24 @@ FormatsToProcess = @('AdmPwd.PS.format.ps1xml')
 NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = ''
+FunctionsToExport = @()
 
 # Cmdlets to export from this module
-CmdletsToExport = '*'
+CmdletsToExport = @('Update-AdmPwdADSchema',
+    'Get-AdmPwdPassword',
+    'Reset-AdmPwdPassword',
+    'Set-AdmPwdComputerSelfPermission',
+    'Find-AdmPwdExtendedRights',
+    'Set-AdmPwdAuditing',
+    'Set-AdmPwdReadPasswordPermission',
+    'Set-AdmPwdResetPasswordPermission'
+)
 
 # Variables to export from this module
-VariablesToExport = '*'
+VariablesToExport = @()
 
 # Aliases to export from this module
-AliasesToExport = '*'
+AliasesToExport = @()
 
 # List of all modules packaged with this module
 ModuleList = @()
