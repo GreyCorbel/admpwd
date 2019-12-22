@@ -6,11 +6,10 @@
 # Generated on: 3.12.2012
 #
 
-
 @{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = '.\AdmPwd.PS.dll'
+RootModule = '.\AdmPwd.PS.dll'
 
 # Version number of this module.
 ModuleVersion = '6.3.1.0'
@@ -22,7 +21,7 @@ GUID = '11869C0C-4440-4560-AA89-9EEF0C0224FA'
 Author = 'Jiri Formacek - GreyCorbel Solutions'
 
 # Company or vendor of this module
-CompanyName = 'Microsoft | Services'
+CompanyName = 'GreyCorbel Solutions'
 
 # Copyright statement for this module
 Copyright = ''
