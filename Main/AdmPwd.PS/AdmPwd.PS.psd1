@@ -13,13 +13,13 @@
 ModuleToProcess = '.\AdmPwd.PS.dll'
 
 # Version number of this module.
-ModuleVersion = '5.0.0.0'
+ModuleVersion = '6.3.1.0'
 
 # ID used to uniquely identify this module
 GUID = '11869C0C-4440-4560-AA89-9EEF0C0224FA'
 
 # Author of this module
-Author = 'Jiri Formacek - MSFT'
+Author = 'Jiri Formacek - GreyCorbel Solutions'
 
 # Company or vendor of this module
 CompanyName = 'Microsoft | Services'
