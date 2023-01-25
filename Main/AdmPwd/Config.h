@@ -99,8 +99,8 @@ private:
 	bool _pwdExpirationProtectionRequired;
 
 	//methods
-	HRESULT GetRegistryDWORD(_In_ HKEY hReg, _In_ LPCTSTR regValueName, _Out_ DWORD *retVal);
-	HRESULT GetRegistryString(_In_ HKEY hReg, _In_ LPCTSTR regValueName, _Out_ TCHAR **retVal, _Out_ DWORD *dwStringLen);
+	HRESULT GetRegistryDWORD(_In_ HKEY hReg, _In_ LPCTSTR regValueName, _Out_ DWORD *retVal) noexcept;
+	HRESULT GetRegistryString(_In_ HKEY hReg, _In_ LPCTSTR regValueName, _Out_ TCHAR **retVal, _Out_ DWORD *dwStringLen) noexcept;
 };
 
 #endif // !ADMPWD_CONFIG
