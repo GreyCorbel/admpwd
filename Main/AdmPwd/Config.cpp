@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Config.h"
 
-Config::Config()
+Config::Config() noexcept
 {
 	DWORD data;
 	HKEY hPolicyKey = 0;
@@ -37,11 +37,11 @@ Config::Config()
 		if (_pwdLength > MAX_PWD_LENGTH || _pwdLength < MIN_PWD_LENGTH)
 			_pwdLength = PWD_LENGTH;
 
-		GetRegistryDWORD(hPolicyKey, PWD_COMPLEXITY_REG_VALUE, &_pwdComplexity);
-		if (_pwdLength > MAX_PWD_LENGTH || _pwdLength < PWD_LENGTH)
-			_pwdLength = PWD_LENGTH;
-
 		GetRegistryDWORD(hPolicyKey, PWD_AGE_REG_VALUE, &_pwdAge);
+		if (_pwdAge > MAX_PWD_AGE_DAYS)
+			_pwdAge = MAX_PWD_AGE_DAYS;
+
+		GetRegistryDWORD(hPolicyKey, PWD_COMPLEXITY_REG_VALUE, &_pwdAge);
 		if (_pwdComplexity < MIN_PWD_COMPLEXITY || _pwdComplexity > MAX_PWD_COMPLEXITY)
 			_pwdComplexity = MAX_PWD_COMPLEXITY;
 

@@ -31,19 +31,22 @@ enum {
 #define PWD_EXPIRATION_PROTECTION_ENABLED_REG_VALUE L"PwdExpirationProtectionEnabled"
 
 //Password quality and duration parameters
-#define MAX_PWD_COMPLEXITY	4	//default
+//default pwd complexity
+#define MAX_PWD_COMPLEXITY	4
 #define MIN_PWD_COMPLEXITY	1
 #define MIN_PWD_LENGTH	8
-#define PWD_LENGTH		12	//default
+//default pwd length
+#define PWD_LENGTH		12
 #define MAX_PWD_LENGTH	64
-#define PWD_AGE_DAYS	30	//default
+//default pwd age
+#define PWD_AGE_DAYS	30
 #define MAX_PWD_AGE_DAYS	365
 #define MIN_PWD_AGE_DAYS	1
 
 class Config
 {
 public:
-	Config();
+	Config() noexcept;
 	~Config();
 
 	//password complexity
@@ -62,25 +65,25 @@ public:
 	__declspec(property(get = GET_PasswordExpirationProtectionRequired)) bool PasswordExpirationProtectionRequired;
 
 	//accessors
-	DWORD GET_PasswordComplexity() {
+	DWORD GET_PasswordComplexity() noexcept {
 		return _pwdComplexity;
 	};
-	bool GET_AccountManagementEnabled() {
+	bool GET_AccountManagementEnabled() noexcept {
 		return _AccountManagementEnabled;
 	};
-	DWORD GET_PasswordLength() {
+	DWORD GET_PasswordLength() noexcept {
 		return _pwdLength;
 	};
-	DWORD GET_PasswordAge() {
+	DWORD GET_PasswordAge() noexcept {
 		return _pwdAge;
 	};
-	DWORD GET_LogLevel() {
+	DWORD GET_LogLevel() noexcept {
 		return _logLevel;
 	};
-	TCHAR* GET_AdminAccountName() {
+	TCHAR* GET_AdminAccountName() noexcept {
 		return _adminName;
 	};
-	bool GET_PasswordExpirationProtectionRequired() {
+	bool GET_PasswordExpirationProtectionRequired() noexcept {
 		return _pwdExpirationProtectionRequired;
 	};
 	
